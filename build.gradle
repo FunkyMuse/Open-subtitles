@@ -1,0 +1,107 @@
+ext {
+    retrofit = "2.9.0"
+    moshi = "1.11.0"
+
+    //compilation
+    compileVersion = 30
+    minVersion = 21
+    verCode = 1
+    verName = "1.0.0"
+    testRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+}
+
+buildscript {
+    ext.kotlin_version = '1.4.21'
+
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.1.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+    }
+}
+
+
+allprojects {
+    group = "io.github.funkymuse"
+
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+
+subprojects {
+    if (it.name != 'app') {
+
+        //setup gradle for libraries
+        apply plugin: 'com.android.library'
+        apply plugin: 'kotlin-android'
+        apply plugin: 'kotlin-parcelize'
+        apply plugin: 'kotlin-kapt'
+        apply plugin: 'com.github.dcendents.android-maven'
+
+        dependencies {
+            implementation fileTree(dir: 'libs', include: ['*.jar'])
+            //moshi
+            implementation "com.squareup.moshi:moshi-kotlin:$moshi"
+            kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi"
+        }
+
+    } else  {
+        apply plugin: 'com.android.application'
+        apply plugin: 'kotlin-android'
+        apply plugin: 'kotlin-kapt'
+        apply plugin: 'kotlin-parcelize'
+
+        dependencies {
+            implementation fileTree(dir: 'libs', include: ['*.jar'])
+            //moshi
+            implementation "com.squareup.moshi:moshi-kotlin:$moshi"
+            kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi"
+        }
+    }
+
+
+    android {
+        compileSdkVersion compileVersion
+
+        defaultConfig {
+            minSdkVersion minVersion
+            targetSdkVersion compileVersion
+            versionCode verCode
+            versionName verName
+            testInstrumentationRunner testRunner
+        }
+
+        compileOptions {
+            sourceCompatibility = 1.8
+            targetCompatibility = 1.8
+        }
+
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
+
+        buildFeatures {
+            aidl = false
+            renderScript = false
+            resValues = false
+            shaders = false
+            buildConfig = false
+        }
+
+        testOptions.unitTests {
+            includeAndroidResources = true
+        }
+    }
+}
