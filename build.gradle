@@ -1,6 +1,12 @@
 ext {
     retrofit = "2.9.0"
     moshi = "1.11.0"
+    coroutines = '1.4.2'
+
+    utilsVersion = "2.2.0"
+
+    daggerVersion = '2.30.1'
+    hiltJetpackVersion = '1.0.0-alpha02'
 
     //compilation
     compileVersion = 30
@@ -13,6 +19,7 @@ ext {
 
 buildscript {
     ext.kotlin_version = '1.4.21'
+    ext.hilt_version = '2.30.1-alpha'
 
     repositories {
         google()
@@ -22,6 +29,8 @@ buildscript {
         classpath 'com.android.tools.build:gradle:4.1.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
+
     }
 }
 
@@ -32,6 +41,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven { url 'https://jitpack.io' }
     }
 }
 
@@ -42,33 +52,35 @@ task clean(type: Delete) {
 
 subprojects {
     if (it.name != 'app') {
-
         //setup gradle for libraries
         apply plugin: 'com.android.library'
-        apply plugin: 'kotlin-android'
-        apply plugin: 'kotlin-parcelize'
-        apply plugin: 'kotlin-kapt'
-        apply plugin: 'com.github.dcendents.android-maven'
-
-        dependencies {
-            implementation fileTree(dir: 'libs', include: ['*.jar'])
-            //moshi
-            implementation "com.squareup.moshi:moshi-kotlin:$moshi"
-            kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi"
-        }
-
-    } else  {
+    } else {
         apply plugin: 'com.android.application'
-        apply plugin: 'kotlin-android'
-        apply plugin: 'kotlin-kapt'
-        apply plugin: 'kotlin-parcelize'
+    }
 
-        dependencies {
-            implementation fileTree(dir: 'libs', include: ['*.jar'])
-            //moshi
-            implementation "com.squareup.moshi:moshi-kotlin:$moshi"
-            kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi"
-        }
+    apply plugin: 'kotlin-android'
+    apply plugin: 'kotlin-parcelize'
+    apply plugin: 'kotlin-kapt'
+    apply plugin: 'com.github.dcendents.android-maven'
+    apply plugin: 'dagger.hilt.android.plugin'
+
+    dependencies {
+        implementation fileTree(dir: 'libs', include: ['*.jar'])
+        //moshi
+        implementation "com.squareup.moshi:moshi-kotlin:$moshi"
+        kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi"
+
+        //dagger
+        implementation "com.google.dagger:dagger:$daggerVersion"
+        kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+
+        //hilt
+        implementation "com.google.dagger:hilt-android:$hilt_version"
+        kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+        //hilt jetpack
+        implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltJetpackVersion"
+        kapt "androidx.hilt:hilt-compiler:$hiltJetpackVersion"
     }
 
 

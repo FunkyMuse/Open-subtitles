@@ -3,11 +3,9 @@ package com.funkymuse.opensubs
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import androidx.annotation.Keep
 
-@Keep
 @JsonClass(generateAdapter = true)
-data  class OpenSubtitleItem (
+data class OpenSubtitleItem(
         @Json(name = "IDMovie")
         val iDMovie: String?,
         @Json(name = "IDMovieImdb")
@@ -123,13 +121,13 @@ data  class OpenSubtitleItem (
         @Json(name = "UserRank")
         val userRank: String?,
         @Json(name = "ZipDownloadLink")
-        val zipDownloadLink: String?) {
+        val zipDownloadLink: String?
+) {
 
-    @Keep
     @JsonClass(generateAdapter = true)
     data class QueryParameters(
-        @Json(name = "query")
-        val query: String?
+            @Json(name = "query")
+            val query: String?
     )
 
 }
