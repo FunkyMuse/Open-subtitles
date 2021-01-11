@@ -3,7 +3,7 @@ package com.funkymuse.opensubs
 /**
  * Created by crazy on 1/10/21 to long live and prosper !
  */
-internal object Consts {
+object Consts {
 
     const val BASE_URL = "https://rest.opensubtitles.org/"
 

@@ -1,7 +1,7 @@
 package com.funkymuse.opensubs.api
 
-import com.crazylegend.retrofit.retrofitResult.RetrofitResult
 import com.funkymuse.opensubs.OpenSubtitleItem
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Url
 
@@ -12,6 +12,6 @@ import retrofit2.http.Url
 interface OpenSubsAPI {
 
     @GET
-    suspend fun getSubtitles(@Url url: String): RetrofitResult<List<OpenSubtitleItem>?>
-    
+    suspend fun getSubtitles(@Url url: String): Response<List<OpenSubtitleItem>?>
+
 }

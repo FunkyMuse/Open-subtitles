@@ -61,6 +61,9 @@ class MainActivity : AppCompatActivity() {
     private fun handleSubtitles(result: RetrofitResult<List<OpenSubtitleItem>?>) {
         binding.loading.isVisible = result is RetrofitResult.Loading
         result.handle(
+            callError = { throwable->
+                throwable.printStackTrace()
+            },
             success = {
                 subsAdapter.submitList(this)
             }

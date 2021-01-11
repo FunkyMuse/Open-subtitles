@@ -1,22 +1,20 @@
-package com.funkymuse.opensubs.repo
+package com.funkymuse.opensubshilt
 
 import android.content.Context
 import android.net.Uri
 import com.funkymuse.opensubs.OpenSubtitleItem
 import com.funkymuse.opensubs.OpenSubtitlesUrl
 import com.funkymuse.opensubs.api.OpenSubsAPI
-import com.funkymuse.opensubs.api.OpenSubsRetrofit
 import com.funkymuse.opensubs.service.OpenSubtitleService
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Created by crazy on 1/10/21 to long live and prosper !
- * @property openSubsAPI OpenSubsAPI [com.funkymuse.opensubs.api.OpenSubsRetrofit.getClient]
- * @constructor
  */
-class OpenSubtitleRepository constructor(private val openSubsAPI: OpenSubsAPI) :
+@Singleton
+class OpenSubtitleHiltRepository @Inject constructor(private val openSubsAPI: OpenSubsAPI) :
     OpenSubtitleService {
-
-    constructor(context: Context) : this(OpenSubsRetrofit.getClient(context))
 
     override suspend fun search(url: String) =
         openSubsAPI.getSubtitles(url)

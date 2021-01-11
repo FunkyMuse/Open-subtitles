@@ -13,10 +13,7 @@ android {
 }
 
 dependencies {
-    implementation project(path: ':opensubs')
-
-    implementation "com.github.FunkyMuse.KAHelpers:retrofit:$utilsVersion"
-    implementation "com.github.FunkyMuse.KAHelpers:recyclerview:$utilsVersion"
+    implementation project(path: ':opensubshiltsealed')
 
     //ui
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'

@@ -1,0 +1,4 @@
+dependencies {
+    api project(path: ':opensubs')
+    api project(path: ':opensubssealed')
+}

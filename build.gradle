@@ -8,7 +8,6 @@ ext {
     daggerVersion = '2.30.1'
     hiltJetpackVersion = '1.0.0-alpha02'
 
-    //compilation
     compileVersion = 30
     minVersion = 21
     verCode = 1
@@ -30,7 +29,6 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
-
     }
 }
 
@@ -51,36 +49,90 @@ task clean(type: Delete) {
 
 
 subprojects {
-    if (it.name != 'app') {
-        //setup gradle for libraries
-        apply plugin: 'com.android.library'
-    } else {
-        apply plugin: 'com.android.application'
-    }
 
-    apply plugin: 'kotlin-android'
-    apply plugin: 'kotlin-parcelize'
-    apply plugin: 'kotlin-kapt'
-    apply plugin: 'com.github.dcendents.android-maven'
-    apply plugin: 'dagger.hilt.android.plugin'
 
-    dependencies {
-        implementation fileTree(dir: 'libs', include: ['*.jar'])
-        //moshi
-        implementation "com.squareup.moshi:moshi-kotlin:$moshi"
-        kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi"
+    switch (it.name) {
+        case 'app':
+            apply plugin: 'com.android.application'
+            apply plugin: 'kotlin-android'
+            apply plugin: 'kotlin-parcelize'
+            apply plugin: 'kotlin-kapt'
+            apply plugin: 'dagger.hilt.android.plugin'
+            dependencies {
+                implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-        //dagger
-        implementation "com.google.dagger:dagger:$daggerVersion"
-        kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+                implementation "com.github.FunkyMuse.KAHelpers:retrofit:$utilsVersion"
+                implementation "com.github.FunkyMuse.KAHelpers:recyclerview:$utilsVersion"
 
-        //hilt
-        implementation "com.google.dagger:hilt-android:$hilt_version"
-        kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+                //moshi
+                implementation "com.squareup.moshi:moshi-kotlin:$moshi"
+                kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi"
 
-        //hilt jetpack
-        implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltJetpackVersion"
-        kapt "androidx.hilt:hilt-compiler:$hiltJetpackVersion"
+                //dagger
+                implementation "com.google.dagger:dagger:$daggerVersion"
+                kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+
+                //hilt
+                implementation "com.google.dagger:hilt-android:$hilt_version"
+                kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+                //hilt jetpack
+                implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltJetpackVersion"
+                kapt "androidx.hilt:hilt-compiler:$hiltJetpackVersion"
+
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
+
+            }
+            break
+
+        case ['opensubshilt', 'opensubshiltsealed']:
+            apply plugin: 'com.android.library'
+            apply plugin: 'kotlin-android'
+            apply plugin: 'kotlin-kapt'
+            apply plugin: 'dagger.hilt.android.plugin'
+            apply plugin: 'com.github.dcendents.android-maven'
+            dependencies {
+                implementation "com.github.FunkyMuse.KAHelpers:retrofit:$utilsVersion"
+
+                //moshi
+                implementation "com.squareup.moshi:moshi-kotlin:$moshi"
+                kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi"
+
+                //dagger
+                implementation "com.google.dagger:dagger:$daggerVersion"
+                kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+
+                //hilt
+                implementation "com.google.dagger:hilt-android:$hilt_version"
+                kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+                //hilt jetpack
+                implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltJetpackVersion"
+                kapt "androidx.hilt:hilt-compiler:$hiltJetpackVersion"
+
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
+            }
+            break
+
+        case ['opensubs', 'opensubssealed']:
+            apply plugin: 'com.android.library'
+            apply plugin: 'kotlin-android'
+            apply plugin: 'kotlin-kapt'
+            apply plugin: 'com.github.dcendents.android-maven'
+            dependencies {
+                implementation "com.github.FunkyMuse.KAHelpers:retrofit:$utilsVersion"
+
+                //moshi
+                implementation "com.squareup.moshi:moshi-kotlin:$moshi"
+                kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi"
+
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
+            }
+            break
+
     }
 
 
@@ -116,4 +168,5 @@ subprojects {
             includeAndroidResources = true
         }
     }
+
 }
