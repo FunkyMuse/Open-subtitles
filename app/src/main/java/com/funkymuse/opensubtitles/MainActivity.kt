@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     private val subsAdapter by lazy {
         generateRecyclerWithHolder<OpenSubtitleItem, ItemviewSubtitleBinding>(
             ItemviewSubtitleBinding::inflate
-        ) { item, _, _, binding ->
+        ) { item, _, _, binding,_ ->
             binding.language.text = item.languageName
             binding.subTitle.text = item.subFileName
         }
