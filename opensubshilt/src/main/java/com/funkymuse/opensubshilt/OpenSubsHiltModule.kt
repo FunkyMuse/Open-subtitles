@@ -26,8 +26,7 @@ object OpenSubsHiltModule {
     @Singleton
     @Provides
     fun subsRetrofit(
-        @ApplicationContext context: Context,
         openSubsHeader: OpenSubsHeader
     ): OpenSubsAPI =
-        OpenSubsRetrofit.getClient(context, openSubsHeader)
+        OpenSubsRetrofit.getClient( openSubsHeader)
 }

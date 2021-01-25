@@ -12,20 +12,20 @@ import com.funkymuse.opensubssealed.service.OpenSubtitleServiceSealed
  * Created by crazy on 1/10/21 to long live and prosper !
  */
 class OpenSubtitleSealedRepository constructor(private val openSubsAPI: OpenSubsAPISealed) :
-    OpenSubtitleServiceSealed {
+        OpenSubtitleServiceSealed {
 
-    constructor(context: Context) : this(OpenSubsRetrofitSealed.getClient(context))
+    constructor() : this(OpenSubsRetrofitSealed.getClient())
 
     override suspend fun search(url: String) =
-        openSubsAPI.getSubtitles(url)
+            openSubsAPI.getSubtitles(url)
 
     override suspend fun search(openSubtitlesUrl: OpenSubtitlesUrl) =
-        openSubsAPI.getSubtitles(openSubtitlesUrl.getFinalURL())
+            openSubsAPI.getSubtitles(openSubtitlesUrl.getFinalURL())
 
     override suspend fun downloadSubtitle(
-        context: Context,
-        subtitleItem: OpenSubtitleItem,
-        destinationUri: Uri
+            context: Context,
+            subtitleItem: OpenSubtitleItem,
+            destinationUri: Uri
     ) {
         downloadSubtitleInternal(context, subtitleItem, destinationUri)
     }

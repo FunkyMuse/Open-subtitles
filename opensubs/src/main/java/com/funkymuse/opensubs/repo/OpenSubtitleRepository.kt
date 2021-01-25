@@ -16,7 +16,7 @@ import com.funkymuse.opensubs.service.OpenSubtitleService
 class OpenSubtitleRepository constructor(private val openSubsAPI: OpenSubsAPI) :
     OpenSubtitleService {
 
-    constructor(context: Context) : this(OpenSubsRetrofit.getClient(context))
+    constructor() : this(OpenSubsRetrofit.getClient())
 
     override suspend fun search(url: String) =
         openSubsAPI.getSubtitles(url)
