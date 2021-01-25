@@ -3,7 +3,7 @@ ext {
     moshi = "1.11.0"
     coroutines = '1.4.2'
 
-    utilsVersion = "2.2.4"
+    utilsVersion = "2.2.5"
 
     daggerVersion = '2.31.2'
     hiltJetpackVersion = '1.0.0-alpha02'

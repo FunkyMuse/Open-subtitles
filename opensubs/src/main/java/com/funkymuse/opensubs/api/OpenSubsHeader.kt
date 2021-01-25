@@ -1,5 +1,6 @@
 package com.funkymuse.opensubs.api
 
+import com.funkymuse.opensubs.Consts.USER_AGENT
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
@@ -13,6 +14,6 @@ class OpenSubsHeader: Interceptor {
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response =
         chain.proceed(
-            chain.request().newBuilder().header("User-Agent", "TemporaryUserAgent").build()
+            chain.request().newBuilder().header("User-Agent", USER_AGENT).build()
         )
 }

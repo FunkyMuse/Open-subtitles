@@ -12,4 +12,6 @@ object Consts {
      * https://forum.opensubtitles.org/viewtopic.php?f=8&t=16453#p39771
      */
     const val SEARCH_URL = "${BASE_URL}search"
+
+    const val USER_AGENT = "TemporaryUserAgent"
 }

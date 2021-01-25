@@ -1,8 +1,9 @@
 package com.funkymuse.opensubs.api
 
-import com.crazylegend.retrofit.RetrofitClient
 import com.funkymuse.opensubs.Consts
 import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 
 /**
@@ -11,8 +12,12 @@ import retrofit2.create
 object OpenSubsRetrofit {
 
     fun getClient(openSubsHeader: OpenSubsHeader = OpenSubsHeader(), okHttpClientConfig: OkHttpClient.Builder.() -> Unit = {}) =
-            RetrofitClient.moshiInstanceCoroutines(Consts.BASE_URL) {
-                addInterceptor(openSubsHeader)
-                okHttpClientConfig()
-            }.create<OpenSubsAPI>()
+            Retrofit.Builder()
+                    .addConverterFactory(MoshiConverterFactory.create())
+                    .client(OkHttpClient().newBuilder().also(okHttpClientConfig)
+                            .addInterceptor(openSubsHeader)
+                            .build()
+                    ).baseUrl(Consts.BASE_URL)
+                    .build().create<OpenSubsAPI>()
+
 }
