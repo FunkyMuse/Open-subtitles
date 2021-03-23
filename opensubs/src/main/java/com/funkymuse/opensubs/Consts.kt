@@ -5,7 +5,7 @@ package com.funkymuse.opensubs
  */
 object Consts {
 
-    const val BASE_URL = "https://rest.opensubtitles.org/"
+    const val BASE_URL = "http://rest.opensubtitles.org/"
 
     /**
      * Docs for the API
