@@ -21,7 +21,7 @@ class TestViewModel @Inject constructor(private val openSubtitleRepository: Open
         ViewModel() {
 
     private val subtitlesData: MutableStateFlow<RetrofitResult<List<OpenSubtitleItem>?>> =
-            MutableStateFlow(RetrofitResult.EmptyData)
+            MutableStateFlow(RetrofitResult.Idle)
     val subtitles = subtitlesData.asStateFlow()
 
     fun searchForMovie(openSubtitlesUrl: OpenSubtitlesUrl) {

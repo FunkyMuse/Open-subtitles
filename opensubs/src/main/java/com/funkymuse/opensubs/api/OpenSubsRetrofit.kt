@@ -1,6 +1,5 @@
 package com.funkymuse.opensubs.api
 
-import com.crazylegend.retrofit.RetrofitClient
 import com.funkymuse.opensubs.Consts
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

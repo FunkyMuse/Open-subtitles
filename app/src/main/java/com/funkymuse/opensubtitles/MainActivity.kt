@@ -7,7 +7,8 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.crazylegend.recyclerview.generateRecyclerWithHolder
 import com.crazylegend.retrofit.retrofitResult.RetrofitResult
-import com.crazylegend.retrofit.retrofitResult.handle
+import com.crazylegend.retrofit.retrofitResult.onError
+import com.crazylegend.retrofit.retrofitResult.onSuccess
 import com.funkymuse.opensubs.OpenSubtitleItem
 import com.funkymuse.opensubs.OpenSubtitlesUrl
 import com.funkymuse.opensubtitles.databinding.ActivityMainBinding
@@ -60,13 +61,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleSubtitles(result: RetrofitResult<List<OpenSubtitleItem>?>) {
         binding.loading.isVisible = result is RetrofitResult.Loading
-        result.handle(
-            callError = { throwable->
-                throwable.printStackTrace()
-            },
-            success = {
-                subsAdapter.submitList(this)
+        result
+            .onError { it.printStackTrace() }
+            .onSuccess {
+                subsAdapter.submitList(it)
             }
-        )
     }
 }

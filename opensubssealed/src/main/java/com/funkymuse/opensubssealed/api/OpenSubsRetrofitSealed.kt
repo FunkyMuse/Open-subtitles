@@ -1,10 +1,10 @@
 package com.funkymuse.opensubssealed.api
 
-import com.crazylegend.retrofit.RetrofitClient
 import com.crazylegend.retrofit.adapter.RetrofitResultAdapterFactory
 import com.funkymuse.opensubs.Consts
 import com.funkymuse.opensubs.api.OpenSubsHeader
 import okhttp3.OkHttpClient
+import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 
@@ -13,12 +13,13 @@ import retrofit2.create
  */
 object OpenSubsRetrofitSealed {
 
-    fun getClient(openSubsHeader: OpenSubsHeader = OpenSubsHeader(), okHttpClientConfig: OkHttpClient.Builder.() -> Unit = {}): OpenSubsAPISealed =
-            RetrofitClient.customInstance(Consts.BASE_URL, builderCallback = {
-                addCallAdapterFactory(RetrofitResultAdapterFactory())
-                addConverterFactory(MoshiConverterFactory.create())
-            }, okHttpClientConfig = {
-                addInterceptor(openSubsHeader)
-                okHttpClientConfig()
-            }).create()
+    fun getClient(openSubsHeader: OpenSubsHeader = OpenSubsHeader()): OpenSubsAPISealed =
+        Retrofit.Builder()
+            .baseUrl(Consts.BASE_URL)
+            .addCallAdapterFactory(RetrofitResultAdapterFactory())
+            .addConverterFactory(MoshiConverterFactory.create())
+            .client(OkHttpClient.Builder()
+                .addInterceptor(openSubsHeader)
+                .build())
+            .build().create()
 }
